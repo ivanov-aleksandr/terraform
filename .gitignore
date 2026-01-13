@@ -37,4 +37,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Ignore key files
+key*
+key*.json
+
 # End of https://www.toptal.com/developers/gitignore/api/terraform
