@@ -38,28 +38,28 @@ func TestEndToEndDeploymentScenario(t *testing.T) {
         // test load balancer ip existing
 	    loadbalancerOutput := terraform.Output(t, terraformOptions, "load_balancer_external_ips")
 
-	    // Преобразуем вывод в правильный формат
+	    // Преобразуем вывод в нужный формат
 	    // loadbalancerOutput будет строкой, которую нужно распарсить
 	    fmt.Printf("Load balancer output: %v\n", loadbalancerOutput)
 	    
-	    // Вместо сложной проверки, просто убедимся что вывод не пустой
+	    // убедимся что вывод не пустой
 	    if loadbalancerOutput == "" {
 	        t.Error("Cannot retrieve the public IP address value for the load balancer.")
 	    } else {
 	        fmt.Printf("✓ Load balancer output exists\n")
 	    }
 
-		// test ssh connect - исправляем получение IP адреса
+		// test ssh connect - получение IP адреса
 		instanceIPsMap := terraform.OutputMap(t, terraformOptions, "instance_ips")
 		
 		if len(instanceIPsMap) == 0 {
 			t.Fatal("No instance IPs available")
 		}
 		
-		// Берем первый доступный IP
+		// первый доступный IP
 		var vmLinuxPublicIPAddress string
 		for _, ip := range instanceIPsMap {
-			vmLinuxPublicIPAddress = ip.(string)
+			vmLinuxPublicIPAddress = ip
 			break
 		}
 		
