@@ -32,10 +32,11 @@ resource "yandex_compute_instance" "wp_app" {
     # Получаем ID подсети для текущей зоны из мапы
     subnet_id = local.subnet_map[element(var.instance_zones, count.index % length(var.instance_zones))]
     nat       = true
+    security_group_ids = [yandex_vpc_security_group.allow_web.id]
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("C:/Users/aivanov/.ssh/id_ed25519_aivanovvscode.pub")}"
+    ssh-keys = "aivanov:${file("C:/Users/aivanov/.ssh/id_ed25519_aivanovvscode.pub")}"
   }
     # Зависимость от создания подсетей
   depends_on = [yandex_vpc_subnet.wp_subnet]
